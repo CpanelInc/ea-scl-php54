@@ -143,7 +143,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  5.4.45
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4576 for more details
-%define release_prefix 80
+%define release_prefix 81
 Release: %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -188,6 +188,7 @@ Patch200: php-fpm.epoll.patch
 Patch201: 0001-Update-libxml-include-file-references.patch
 
 Patch015: 0015-libxml2-2.13-makes-changes-to-how-the-parsing-state-.patch
+Patch016: 0016-Fix-libxml2-v2.15.0-compatibility.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -1007,6 +1008,7 @@ inside them.
 sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
 
 %patch015 -p1 -b .libxml2
+%patch016 -p1 -b .libxml2
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1877,6 +1879,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 14 2025 Chris Castillo <chris.castillo@webpros.com> - 5.4.45-81
+- EA4-136: Fix libxml2 v2.15.0 compatibility
+
 * Fri Sep 13 2024 Julian Brown <julian.brown@cpanel.net> - 5.4.45-80
 - ZC-12167: Correct libxml2 problem
 
